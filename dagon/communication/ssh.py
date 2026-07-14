@@ -101,9 +101,13 @@ class SSHManager:
         code = stdout.channel.recv_exit_status()
         stdout = "\n".join(stdout.readlines())
         stderr = "\n".join(stderr.readlines())
-        if len(stderr):
-            return {"code": 1, "message": stderr}
-        elif code > 0:
-            return {"code": 1, "message": stdout}
+        # if len(stderr):
+        #     return {"code": 1, "message": stderr}
+        # elif code > 0:
+        #     return {"code": 1, "message": stdout}
+        # else:
+        #     return {"code": 0, "output": stdout}
+        if code != 0:
+            return {"code": 1, "message": stderr if stderr else stdout}
         else:
             return {"code": 0, "output": stdout}
